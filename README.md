@@ -239,5 +239,11 @@ or against another AI (which may implement the same or a different strategy).
 # Jar File
 In order for a valid call to the Jar file, all 6 needed arguments are required
 
+Number of rows, Number of columns, Red Player Deck, Blue Player Deck, name of strategy,
+name of strategy
+
+the 3 possible names of strategies are strategy1, strategy2, and human. If human is selected
+that means that a player will be responsible for the moves of the given color.
+
 Example:
-java -jar SanguineHomework7.jar 5 7 docs/35CardDeck1 docs/35CardDeck1 strategy2 human
+java -jar SanguineJava.jar 5 7 docs/35CardDeck1 docs/35CardDeck1 strategy2 human
