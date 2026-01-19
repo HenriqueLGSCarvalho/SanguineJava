@@ -1,0 +1,4 @@
+Strategy 2: playHighestValuePossibleCardOrPass
+
+Log:
+"Played card (Card 5, Value = 5, Cost = 1) on cell [0, 0]""

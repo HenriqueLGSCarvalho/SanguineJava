@@ -1,0 +1,193 @@
+BASIC OVERVIEW:
+
+Facts of the Game:
+  - Two players; red and blue
+  - Each player gets a deck of cards
+  - Each player has a hand of cards made from their respective decks
+
+Start Game:
+  - Each player must be given a deck of cards to play with
+  - Player's hand size must be chosen, and then cards must be distributed to hand from the deck
+  - The board must be constructed
+  - Board starts empty, Except:
+    - Cells in the first column start with a single pawn in each cell (belongs to the red player)
+    - Cells in the last column start with a single pawn in each cell (belongs to the blue player)
+
+Deck of Cards:
+  - Must be enough cards in each deck to possibly fill every cell on the board
+  - Can only be TWO copies of any card in a deck (duplicates allowed, triplets not allowed)
+  - The deck for each player will be read in from a separate file (???)
+
+Board:
+  - Rectangular
+  - Dimensions must be specified before the game starts
+  - Number of rows must be positive (greater than 0)
+  - Number of columns must be greater than 1, and must be odd (3, 5, 7, 9, etc.)
+
+Player's hand:
+  - Size of the hand cannot be greater than 1/3rd of the deck size
+
+Game Play:
+  - 1) Both players are dealt an equal number of cards to their hand from their respective decks
+       - cards are dealt randomly from each player's respective deck into their hand
+  - 2) Player Red always starts
+  - 3) Typical Turn
+       - Current player first draws a card from their deck
+       - If there are no cards remaining in the deck, then no card is drawn
+       - Then they take an action
+         - Pass: Current Player's turn ends, and the current player becomes the other player
+         - Place a Card: 1) To place a card, the player must place their card in a cell that has
+                            that has enough of their own pawns to cover the cost of the card.
+                         2) The newly placed card can then affect the board by adding pawns to other
+                            cells or converting pawns from the opponent's ownership to the current
+                            player's ownership
+                         3) Once a card is successfully played, the turn changes to the next player
+  - 4) Game ends when both players pass their turn, one right after the other,
+       The winner is determined by calculating the score of each row
+
+____________________________________________________________________________________________________
+CARDS - IN DEPTH:
+
+Each Card has:
+  - Name
+  - Cost: One, Two, or Three pawns
+  - Value Score: any positive integer, used to determine the overall score of the game
+  - 5 by 5 board: Demonstrates the card's influence on the actual game board
+    - Orange Square: the card itself (C)
+    - Cyan Square: it affects the cell relative to where the card is placed on the board (I)
+    - Grey Square: Nothing happens on those cells (X)
+  * The name, cost, and score are all depicted in text on the card itself
+
+Card Equality
+  - Two cards are the same if they have the same name, cost, value score, and influence grid
+
+Supplying Cards:
+  - We will be supplying cards to the game via files that contain the decks for each player.
+
+____________________________________________________________________________________________________
+BOARD - IN DEPTH:
+
+Board is a Rectangular container of cells
+
+Cells:
+  - Can contain pawns, cards, or nothing
+  - Each cell can contain between 0 - 3 pawns
+  - If a cell has a pawn or card, then it is owned by one of the players
+    - cells with cards cannot change ownership
+    - cells with pawn can change ownership, depending on the cards the current turn player places
+      on the board
+____________________________________________________________________________________________________
+SCORING THE GAME - IN DEPTH:
+
+Score Calculation: Each row tallies the scores for each player
+  - "Row scores": calculated by summing the value scores of each card owned by that player
+  - We know which players owns which card by looking at the color of the cell
+  - each player's Total Score should be calculable at any point in the game
+
+Calculating "Row Scores" & Total Score
+  - (1) Examine each Row's Scores for each player
+  - (2.1) The player with the higher row score adds the score of that row to their total score
+  - (2.2) The player with the lower row score gains 0 points for their total score
+  - (2.3) If both player's have an equal row score, both gain 0 points for their total score
+  - (3) Repeat step 2 & add up all of each player's total score
+  - (4.1) The player with the higher total score wins
+  - (4.2) If both players with an equal score the game ends in a tie
+____________________________________________________________________________________________________
+PLACING A CARD - IN DEPTH:
+
+A player can place a card from their hand onto a cell if:
+  - the cell contains pawns the player owns AND
+  - the cell contains at least enough pawns to cover the cost of the card
+
+If both conditions are met:
+  - The pawns on that cell are removed
+  - The card is placed on that cell (and removed from the player's hand)
+
+If either condition is not met:
+  - The player must choose another card that does satisfy both conditions
+  - If none of the cards on hand satisfy the conditions, the player must pass their turn
+____________________________________________________________________________________________________
+CARDS INFLUENCE ON BOARD - IN DEPTH:
+
+Once a card is placed, the card's influence spreads on the board
+according to that card's influence grid
+
+Grey cells:
+  - The grey cells represent the remaining cells in the example board (no influence from card)
+
+Orange cells:
+  - The orange cell represents the cell the card is being placed on (no influence from card)
+
+Cyan cells:
+  - The cyan cells represent the cells which are influenced by the card (influence from card)
+
+Influence:
+  - Each cell has a card, pawns, or nothing; influence works differently for each.
+  - Influence on cell containing a Card:
+    - Nothing happens
+  - Influence on cell containing Nothing:
+    - The cell gains a single pawn (owned by the current turn player)
+  - Influence on a cell containing pawns:
+    - If the current player owns the pawns
+      - The number of pawns on that cell increases by one (maximum of 3 pawns)
+    - If the current player does not own the pawns:
+      - The number of pawns stay the same
+      - the current player steals ownership of the pawns in that cell
+
+Influence off-grid:
+  - A card's influence could potentially affect a cell which is outside of the board
+    - In this instance, the card will simply not exercise its influence for those cells
+    - A card will only influence cells that are on the board
+
+Influence on same card, but different player:
+  - Since red and blue start on different sides, the influence grid is mirrored across
+    the columns (i.e. Y-Intercept)
+____________________________________________________________________________________________________
+READING DECK CONFIGURATION FILES - IN DEPTH:
+
+We will be using configuration files to instantiate the grid and cards for our game.
+
+For this section, it may be helpful to read up on the
+FileReader and Scanner documentation from Oracle.
+
+Windows uses "\" to separate folders while Macs and Linux use "/"
+
+...
+____________________________________________________________________________________________________
+BASIC VIEW:
+
+We recommend a straightforward rendering of the board itself and the row-scores,
+  - using _ for empty cells,
+  - an integer of 1, 2, or 3 for the number of pawns on the board,
+  - R for a card owned by the red player,
+  - and B for a card owned by the blue player.
+
+Example:
+  2 RR__3 0
+  0 2__1B 1
+  0 11_1B 3
+____________________________________________________________________________________________________
+CONTROLLER:
+
+No need to implement a controller for this assignment, but consider how you will in the future
+____________________________________________________________________________________________________
+Possible AI:
+
+You do not have to implement a computer user-player right now,
+but you should design your model so that different user-player implementations could exist for human
+or machines to play your game.
+You should attempt to design a user-player interface that allows this to happen.
+____________________________________________________________________________________________________
+Further notes that may help in future assignments:
+
+- the game sanguine is based on has different types of influence,
+  like increasing or decreasing the value scores of cards.
+  (this is not yet to be implemented, just good to keep in mind)
+
+- And then there are the user-players (an object that the users actually play the game through),
+  which are not part of the model, view, or controller.
+  User-players make decisions about what move they want to make
+  (not be confused with the player entities of Red and Blue in the model),
+  so they "have a different interface" than the other components discussed so far.
+
+Continue Reading at 7 Architectural Choices...

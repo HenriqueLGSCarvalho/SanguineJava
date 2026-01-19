@@ -1,0 +1,103 @@
+Maybe at some point:
+  - Go through all observer methods and ensure they cannot be used for mutations
+  - Potentially add more observers if needed for the view
+____________________________________________________________________________________________________
+1) Create View:
+   - Key Concepts to keep in kind: PubSub Pattern, Coordinate Conversion, JFrame library
+   - Needs at least an interface & model implementing that interface
+
+What should be apparent in the view?
+  - which player is playing
+  - what cards are in their hand along with influence grids of those cards
+  - where the board is
+  - what cells belong to the red player, which to the blue player, and which to neither
+  - how many pawns are on a cell without a card
+  - the value scores of any card already on the board
+  - the row-scores for each player
+
+Useful Class Libraries:
+  - JFrame
+  - JPanel
+  - Graphics2D
+  - Graphics
+  - Font
+
+Note: you cannot print newlines with drawString
+  - Solution:
+    https://stackoverflow.com/questions/4413132/problems-with-newline-in-graphics2d-drawstring
+
+Required Behavior:
+  - View must have a constructor that takes in a ReadOnlySanguineModel
+      - Ensures that the view is incapable of modifying the model (even accidentally)
+  - View should be able to handle: mouse clicks & key presses
+      - Will need a stub controller to stand in for the real one and respond to events
+
+Mouse Clicks & Key Presses:
+  - User should be able to click on a card, which should highlight the card
+      - your stub controller should print a message (using System.out)
+        containing the index of the card that was clicked on as well as which player owns that hand.
+  - User should be able to click on a cell in the grid, which should highlight the cell
+      - the stub controller should print a message (using System.out) containing
+        the coordinates of the cell that was clicked on, in whatever coordinate system
+        you used in your model (likely in [row, cell] format).
+  - User should be able to indicate they want to confirm their move or pass by handling
+    keyboard input
+      - the stub controller should print a message (using System.out)
+        printing whether the key press indicated a confirmation or a pass.
+      - Document in README which keys correspond to confirming a move and passing a turn
+  - User should be able to deselect a selected card in hand or selected cell on the board by
+      - Clicking on it again OR
+      - Clicking on another card
+      - Note: Clicking outside the boundary of the grid or the hand must not cause
+              your view to crash, throw an exception, or otherwise break.
+  - General Note: Whenever resizing the window to be larger or smaller, all of the above
+                  functionality should still work correctly
+
+Running the View:
+  - Add the following placeholder class to your project
+        public final class SanguineGame {
+          public static void main(String[] args) {
+            YourModel model = ...create an example model...
+            YourView view = new YourView(model);
+            ...whatever other setup you need...
+            view.setVisible(true); //or the equivalent in your system
+          }
+        }
+  - As we've done several times, our main() method simply instantiates a model, instantiates a view
+    using that model, instantiates anything else needed, and tells the view to get started.
+    For this main method, read your example deck configuration file in from HW5 and use the
+    resulting deck for both players (meaning red and blue have copies of the exact same deck).
+    This will ensure a way you can create a view for screenshots and for us to test
+    the functionality described above. Aside from that, anything else can be done in this
+    main method so long as the game is not over when the view is launched.
+____________________________________________________________________________________________________
+1.1) Testing The View
+
+For this assignment, we do not need to unit-test the visual view.
+  - However, in submission, we must include at least 4 screenshots of the view
+      - each screenshot being of a 5 row, 7 column game
+
+Screenshot 1:
+  - At the start of the game
+Screenshot 2:
+  - With a card and cell selected from the Red Player's hand on their turn
+    during the start of the game
+Screenshot 3:
+  - With a card selected from the Blue Player's hand on their turn
+    during their first turn of the game
+Screenshot 4:
+  - At a non-trivial intermediate point of the game,
+    meaning cards have been played by both players
+
+  - Make sure to name the screenshot appropriately
+  - Make sure the screenshots are reasonably sized
+  - No need for a 4k PNG of the view!
+____________________________________________________________________________________________________
+2) Create View Model:
+     - Implements ReadOnlySanguineModel
+     - Composition from SanguineModel (or maybe BasicSanguine)
+     - Have the view in Main method take in a new view, which takes in a new ViewModel(model).
+____________________________________________________________________________________________________
+3) Strategic computer players
+
+...

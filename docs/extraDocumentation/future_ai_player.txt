@@ -1,0 +1,12 @@
+My plan for creating and implementing a user-player AI interface is still in its very early stages.
+
+My early thoughts are have an AI which checks for all moves within the board, and picks the first
+valid move it finds, if it cannot find a valid move it will skip. Obviously this would make for
+the smartest AI player, but I feel like find a way to implement that will be a solid start in
+understanding how to design these AIs.
+
+Another thought would be to have my AI pick a move based on spreading the highest amount of
+influence. This seems like it will be harder, but maybe achievable, and would definitely make for
+a slightly smarter AI.
+
+I will definitely be giving this more thought throughout the next few weeks as well.

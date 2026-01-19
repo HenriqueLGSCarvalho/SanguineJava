@@ -1,0 +1,5 @@
+Office Hours Question:
+  - Are GUI applications always asynchronous & textual applications always synchronous?
+  - How would you test a GUI view?
+  - Do you ever want to use a "mock view" for testing controllers (or models)
+  - Recommendations for personal projects (to build portfolio)?
