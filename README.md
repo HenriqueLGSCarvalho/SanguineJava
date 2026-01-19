@@ -243,7 +243,10 @@ Number of rows, Number of columns, Red Player Deck, Blue Player Deck, name of st
 name of strategy
 
 the 3 possible names of strategies are strategy1, strategy2, and human. If human is selected
-that means that a player will be responsible for the moves of the given color.
+that means that a player will be responsible for the moves of the given player.
 
 Example:
 java -jar SanguineJava.jar 5 7 docs/35CardDeck1 docs/35CardDeck1 strategy2 human
+
+This will start a game where the board has 5 rows and 7 columns; RedPlayer and BluePlayer will use the deck named "35CardDeck1";
+RedPlayer will be a AI using strategy 2, while BluePlayer will be a human who controls their own moves.
